@@ -1,6 +1,8 @@
 import KnexClient from 'knex';
-import { createStreamsTable } from './create-streams-table';
+import { v4 as uuid } from 'uuid';
+import { appendEvent } from './append-event';
 import { createEventsTable } from './create-events-table';
+import { createStreamsTable } from './create-streams-table';
 
 async function main() {
   const knex = KnexClient({
@@ -16,6 +18,14 @@ async function main() {
 
   await createStreamsTable(knex);
   await createEventsTable(knex);
+  await appendEvent(knex, {
+    id: uuid(),
+    data: {},
+    expectedVersion: 0,
+    streamId: uuid(),
+    streamType: 'idk-1000',
+    type: 'test-event',
+  });
 }
 
 main()
