@@ -31,6 +31,8 @@ async function main() {
     streamType: STREAM_TYPE,
     type: 'test-event',
   });
+
+  await knex.destroy();
 }
 
 main()
