@@ -1,13 +1,5 @@
 import { Knex } from 'knex';
-
-interface Event {
-  id: string;
-  data: object;
-  expectedVersion: number;
-  streamId: string;
-  streamType: string;
-  type: string;
-}
+import { Event } from './types';
 
 export async function appendEvent(knex: Knex, event: Event) {
   await knex.transaction(async (trx) => {
@@ -26,7 +18,7 @@ export async function appendEvent(knex: Knex, event: Event) {
     //   in queries because JavaScript may be unable to parse them without loss
     //   of precision" (see https://knexjs.org/guide/schema-builder.html#biginteger).
     if (parseInt(streamRecord[0].version) !== event.expectedVersion) {
-      throw new Error(`Stream version ${streamRecord[0].version} and expected version ${event.expectedVersion} do not match.`)
+      throw new Error(`Stream version ${streamRecord[0].version} and expected version ${event.expectedVersion} do not match.`);
     }
 
     // Insert new row into events table with version equal to expected_stream_version + 1
