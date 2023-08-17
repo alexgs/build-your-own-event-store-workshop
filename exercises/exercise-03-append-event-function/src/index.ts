@@ -20,7 +20,7 @@ async function main() {
   await createEventsTable(knex);
   await appendEvent(knex, {
     id: uuid(),
-    data: {},
+    data: { hello: 'world' },
     expectedVersion: 0,
     streamId: uuid(),
     streamType: 'idk-1000',

@@ -1,3 +1,6 @@
-# Exercise 1
+# Exercise 3
 
-There are no tests for this. Just run it, and then manually verify that the table was created correctly. (The debug output of the Knex connection is also good for manual verification.)
+In the workshop repo and in his talk, Oskar implements this as a stored 
+procedure. That probably gives better performance. I didn't want to deal with 
+stored procedures, but I just wrapped it in a transaction using the Knex 
+client.

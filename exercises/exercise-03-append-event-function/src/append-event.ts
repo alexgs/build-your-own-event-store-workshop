@@ -17,11 +17,22 @@ export async function appendEvent(knex: Knex, event: Event) {
       await trx('streams').insert({
         id: event.streamId,
         type: event.streamType,
-        version: 0
+        version: 0,
       });
     }
 
     // Insert new row into events table with version equal to expected_stream_version + 1
+    await trx('events').insert({
+      id: event.id,
+      data: event.data,
+      stream_id: event.streamId,
+      type: event.type,
+      version: event.expectedVersion + 1,
+    });
+
     // Update stream version with expected_stream_version + 1
+    await trx('streams').where('id', event.streamId).update({
+      version: event.expectedVersion + 1,
+    });
   });
 }
