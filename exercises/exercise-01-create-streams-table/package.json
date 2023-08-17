@@ -1,0 +1,13 @@
+{
+  "name": "exercise-01-create-streams-table",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "knex": "^2.5.1",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {}
+}
