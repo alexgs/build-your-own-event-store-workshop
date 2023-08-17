@@ -1,0 +1,17 @@
+services:
+  database:
+    image: postgres:13-alpine
+    container_name: database
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: solarwinds123
+    networks:
+      - app-network
+    ports:
+      - "5432:5432"
+    working_dir: /host
+
+networks:
+  app-network:
+    driver: bridge
+    name: app-network
