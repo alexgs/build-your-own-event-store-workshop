@@ -22,7 +22,7 @@ describe('Appending events', () => {
 
   afterAll(() => {
     knex.destroy();
-  })
+  });
 
   it('throws an error if the expected version is wrong', async () => {
     const STREAM_ID = uuid();
@@ -40,14 +40,15 @@ describe('Appending events', () => {
     });
 
     await expect(
-      async () => await appendEvent(knex, {
-        id: uuid(),
-        data: { hello: 'world' },
-        expectedVersion: 0,
-        streamId: STREAM_ID,
-        streamType: STREAM_TYPE,
-        type: 'test-event',
-      }),
+      async () =>
+        await appendEvent(knex, {
+          id: uuid(),
+          data: { hello: 'world' },
+          expectedVersion: 0,
+          streamId: STREAM_ID,
+          streamType: STREAM_TYPE,
+          type: 'test-event',
+        }),
     ).rejects.toThrowError();
   });
 });

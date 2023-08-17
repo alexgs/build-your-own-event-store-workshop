@@ -4,7 +4,9 @@ import { Event } from './types';
 export async function appendEvent(knex: Knex, event: Event) {
   await knex.transaction(async (trx) => {
     // Insert into stream table if there is no stream with provided streamId
-    let streamRecord = await trx('streams').select().where('id', event.streamId);
+    let streamRecord = await trx('streams')
+      .select()
+      .where('id', event.streamId);
     if (streamRecord.length === 0) {
       await trx('streams').insert({
         id: event.streamId,
@@ -18,7 +20,9 @@ export async function appendEvent(knex: Knex, event: Event) {
     //   in queries because JavaScript may be unable to parse them without loss
     //   of precision" (see https://knexjs.org/guide/schema-builder.html#biginteger).
     if (parseInt(streamRecord[0].version) !== event.expectedVersion) {
-      throw new Error(`Stream version ${streamRecord[0].version} and expected version ${event.expectedVersion} do not match.`);
+      throw new Error(
+        `Stream version ${streamRecord[0].version} and expected version ${event.expectedVersion} do not match.`,
+      );
     }
 
     // Insert new row into events table with version equal to expected_stream_version + 1
@@ -31,8 +35,10 @@ export async function appendEvent(knex: Knex, event: Event) {
     });
 
     // Update stream version with expected_stream_version + 1
-    await trx('streams').where('id', event.streamId).update({
-      version: event.expectedVersion + 1,
-    });
+    await trx('streams')
+      .where('id', event.streamId)
+      .update({
+        version: event.expectedVersion + 1,
+      });
   });
 }

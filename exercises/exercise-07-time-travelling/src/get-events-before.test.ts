@@ -66,5 +66,4 @@ describe('Function `getEventsBefore`', () => {
   });
 
   it.todo('returns all events for the stream before the timestamp');
-
 });

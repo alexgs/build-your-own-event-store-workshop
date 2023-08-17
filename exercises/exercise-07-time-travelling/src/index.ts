@@ -40,4 +40,4 @@ main()
     console.log('Success!');
     process.exit(0);
   })
-  .catch(e => console.error(e));
+  .catch((e) => console.error(e));
