@@ -5,6 +5,9 @@ import { createEventsTable } from './create-events-table';
 import { createStreamsTable } from './create-streams-table';
 
 async function main() {
+  const STREAM_ID = uuid();
+  const STREAM_TYPE = 'test-events';
+
   const knex = KnexClient({
     client: 'pg',
     connection: {
@@ -22,9 +25,19 @@ async function main() {
     id: uuid(),
     data: { hello: 'world' },
     expectedVersion: 0,
-    streamId: uuid(),
-    streamType: 'idk-1000',
+    streamId: STREAM_ID,
+    streamType: STREAM_TYPE,
     type: 'test-event',
+  });
+
+  // This one should throw an error, because `expectedVersion` is 0 (same as above)
+  await appendEvent(knex, {
+    id: uuid(),
+    data: { hello: 'world' },
+    expectedVersion: 0,
+    streamId: STREAM_ID,
+    streamType: STREAM_TYPE,
+    type: 'dupe-event',
   });
 }
 
