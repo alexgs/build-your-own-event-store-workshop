@@ -1,0 +1,16 @@
+{
+  "name": "exercise-04-optimistic-concurrency",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "dev": "ts-node src/index.ts",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "knex": "^2.5.1",
+    "pg": "^8.11.3",
+    "uuid": "^9.0.0"
+  }
+}
