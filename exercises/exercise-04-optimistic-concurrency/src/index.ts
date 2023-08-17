@@ -4,6 +4,8 @@ import { appendEvent } from './append-event';
 import { createEventsTable } from './create-events-table';
 import { createStreamsTable } from './create-streams-table';
 
+// This is an example "happy path" execution. See `index.test.ts` for more
+//   tests and usage information.
 async function main() {
   const STREAM_ID = uuid();
   const STREAM_TYPE = 'test-events';
@@ -28,16 +30,6 @@ async function main() {
     streamId: STREAM_ID,
     streamType: STREAM_TYPE,
     type: 'test-event',
-  });
-
-  // This one should throw an error, because `expectedVersion` is 0 (same as above)
-  await appendEvent(knex, {
-    id: uuid(),
-    data: { hello: 'world' },
-    expectedVersion: 0,
-    streamId: STREAM_ID,
-    streamType: STREAM_TYPE,
-    type: 'dupe-event',
   });
 }
 
