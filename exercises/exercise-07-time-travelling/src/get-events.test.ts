@@ -33,7 +33,7 @@ describe('Function `getEvents`', () => {
     await createEventsTable(knex);
     await appendEvent(knex, {
       id: uuid(),
-      data: { hello: 'Corrine' },
+      data: { hello: 'Corin' },
       expectedVersion: 0,
       streamId: STREAM_ID,
       streamType: STREAM_TYPE,
@@ -52,7 +52,7 @@ describe('Function `getEvents`', () => {
 
     expect(output.length).toEqual(2);
     expect(output[0]).toMatchObject({
-      data: { hello: 'Corrine' },
+      data: { hello: 'Corin' },
       stream_id: STREAM_ID,
       type: 'test-event',
       version: '1',

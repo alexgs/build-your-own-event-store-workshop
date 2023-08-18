@@ -33,7 +33,7 @@ describe('Function `aggregateStream`', () => {
     await createEventsTable(knex);
     await appendEvent(knex, {
       id: uuid(),
-      data: { person2: 'Corrine', instrument: 'drums' },
+      data: { person2: 'Corin', instrument: 'drums' },
       expectedVersion: 0,
       streamId: STREAM_ID,
       streamType: STREAM_TYPE,
@@ -52,7 +52,7 @@ describe('Function `aggregateStream`', () => {
 
     expect(output).toMatchObject({
       person1: 'Carrie',
-      person2: 'Corrine',
+      person2: 'Corin',
       instrument: 'guitar',
     });
   });

@@ -33,7 +33,7 @@ describe('Function `getStreamState`', () => {
     await createEventsTable(knex);
     await appendEvent(knex, {
       id: uuid(),
-      data: { hello: 'Corrine' },
+      data: { hello: 'Corin' },
       expectedVersion: 0,
       streamId: STREAM_ID,
       streamType: STREAM_TYPE,
