@@ -48,22 +48,51 @@ describe('Function `getEventsBefore`', () => {
       type: 'test-event',
     });
 
-    const output = await getEventsBefore(knex, STREAM_ID, 10);
+    const output = await getEventsBefore(knex, STREAM_ID, 2);
 
-    expect(output.length).toEqual(2);
+    expect(output.length).toEqual(1);
     expect(output[0]).toMatchObject({
       data: { hello: 'Corrine' },
       stream_id: STREAM_ID,
       type: 'test-event',
       version: '1',
     });
-    expect(output[1]).toMatchObject({
-      data: { hello: 'Carrie' },
-      stream_id: STREAM_ID,
-      type: 'test-event',
-      version: '2',
-    });
   });
 
-  it.todo('returns all events for the stream before the timestamp');
+  it('returns all events for the stream before the timestamp', async () => {
+    const STREAM_ID = uuid();
+    const STREAM_TYPE = 'test-events';
+
+    await createStreamsTable(knex);
+    await createEventsTable(knex);
+    await appendEvent(knex, {
+      id: uuid(),
+      data: { hello: 'Corrine' },
+      expectedVersion: 0,
+      streamId: STREAM_ID,
+      streamType: STREAM_TYPE,
+      type: 'test-event',
+    });
+    await new Promise((resolve) => setTimeout(() => resolve(null), 100)); // Sleep
+    const mark = new Date();
+    await new Promise((resolve) => setTimeout(() => resolve(null), 500)); // Sleep
+    await appendEvent(knex, {
+      id: uuid(),
+      data: { hello: 'Carrie' },
+      expectedVersion: 1,
+      streamId: STREAM_ID,
+      streamType: STREAM_TYPE,
+      type: 'test-event',
+    });
+
+    const output = await getEventsBefore(knex, STREAM_ID, mark);
+
+    expect(output.length).toEqual(1);
+    expect(output[0]).toMatchObject({
+      data: { hello: 'Corrine' },
+      stream_id: STREAM_ID,
+      type: 'test-event',
+      version: '1',
+    });
+  });
 });
